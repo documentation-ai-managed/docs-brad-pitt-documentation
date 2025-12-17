@@ -1,0 +1,111 @@
+---
+title: User Guide for Automated Trading
+description: Comprehensive guide on operating and managing FXZIG trading robots for optimal performance.
+---
+
+## Overview
+
+Operate your FXZIG trading robots effectively to maximize profitability. These expert advisors (EAs) run on MetaTrader 4 or 5 platforms, delivering up to 20 points expectancy per trade. Follow this guide to monitor performance, scale across accounts, adapt to markets, and apply best practices for sustained results.
+
+<Callout kind="tip">
+  Always run EAs on a VPS for 24/7 uptime and minimal latency.
+</Callout>
+
+## Monitoring Live Trades and Performance
+
+Track your robots' activity in real-time to ensure optimal execution.
+
+<Steps>
+  <Step title="Connect to Broker" icon="link">
+    Launch MT4/MT5 and log in to your live account. Verify server connection shows green status.
+  </Step>
+  <Step title="Attach EA" icon="download">
+    Drag the FXZIG EA from Navigator to a chart (e.g., EURUSD H1). Enable "Allow live trading" in settings.
+  </Step>
+  <Step title="Review Journal" icon="book-open">
+    Check the Experts and Journal tabs for trade logs. Look for errors like `>0 spread` or connection issues.
+  </Step>
+  <Step title="Analyze Stats" icon="bar-chart">
+    Use the Trade tab to view profit factor, drawdown, and win rate. Aim for `>1.5` profit factor.
+  </Step>
+</Steps>
+
+| Metric          | Target Value     | Description                          |
+|-----------------|------------------|--------------------------------------|
+| Profit Factor   | `{>1.5}`        | Gross profit divided by gross loss   |
+| Max Drawdown    | `{<10%}`        | Largest peak-to-trough decline       |
+| Win Rate        | `{>60%}`        | Percentage of profitable trades      |
+| Expectancy      | `{20 points}`   | Average profit per trade             |
+
+## Scaling Portfolios Across Multiple Accounts
+
+Expand your strategy by distributing robots across brokers and pairs.
+
+<Tabs>
+  <Tab title="Single Broker" icon="database">
+    Duplicate EAs on multiple pairs like GBPUSD and USDJPY. Start with `{0.01}` lots per `{1000}` balance.
+    
+    <CodeGroup tabs="MT4 Config,MT5 Config">
+    ````ini
+    LotSize=0.01
+    MaxSpread=3.0
+    RiskPercent=2
+    MagicNumber=12345
+    ````
+    ````ini
+    [EA_Settings]
+    Lots=0.01
+    MaxSpread=3
+    Risk=2%
+    Magic=12345
+    ````
+    </CodeGroup>
+  </Tab>
+  <Tab title="Multi-Broker" icon="users">
+    Use VPS to run separate MT4 instances. Allocate `{20%}` balance per broker for diversification.
+  </Tab>
+</Tabs>
+
+## Handling Market Conditions and Adjustments
+
+Adapt to volatility spikes or news events without halting trades.
+
+<ExpandableGroup>
+  <Expandable title="High Volatility (e.g., NFP)" default-open="true">
+    Increase `MaxSpread` to `5.0` points. Pause new trades during `{30min}` pre/post news.
+  </Expandable>
+  <Expandable title="Low Liquidity Periods">
+    Set `MinEquity` threshold to avoid overtrading. Review Asian session performance weekly.
+  </Expandable>
+</ExpandableGroup>
+
+<Callout kind="alert">
+  Never manually close EA trades—let risk management handle stops.
+</Callout>
+
+## Best Practices for Long-Term Usage
+
+Follow these strategies to sustain performance over months.
+
+<Columns cols={3}>
+  <Card title="VPS Management" icon="cloud">
+    Renew VPS monthly. Monitor ping `{<50ms}` to broker servers.
+  </Card>
+  <Card title="Backtesting" icon="play">
+    Test updates on demo first. Use 99% modeling quality.
+  </Card>
+  <Card title="Withdrawals" icon="trending-up">
+    Withdraw `{50%}` profits bi-weekly. Reinvest remainder.
+  </Card>
+</Columns>
+
+<Columns cols={2}>
+  <Card title="Journal Review" icon="settings">
+    Weekly: Scan for `EA errors` or slippage `{>2 points}`.
+  </Card>
+  <Card title="Portfolio Balance" icon="shield">
+    Keep `{<5%}` risk per trade across all accounts.
+  </Card>
+</Columns>
+
+Monitor equity curve monthly. If drawdown exceeds `{15%}`, reduce lot sizes by `{50%}` until recovery. This approach ensures consistent growth with FXZIG robots.

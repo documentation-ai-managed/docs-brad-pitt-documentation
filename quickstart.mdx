@@ -1,0 +1,123 @@
+---
+title: Quickstart Guide
+description: Get started quickly with FXZIG by setting up your first trading portfolio on a live account.
+---
+
+## Overview
+
+Set up your FXZIG trading portfolio in minutes. FXZIG provides ready-to-run expert advisors (EAs) for MetaTrader 4 or 5 that deliver high-expectancy trades of up to 20 points. Follow these steps to download, install, activate, and launch on a live account.
+
+<Callout kind="tip">
+  Use a demo account first to familiarize yourself with the portfolio performance before funding a live account.
+</Callout>
+
+## Prerequisites
+
+Ensure you have these ready before starting:
+
+<Columns cols={2}>
+  <Card title="Broker Account" icon="users" href="https://yourbroker.com/signup">
+    Open a live or demo account with a broker supporting MT4 or MT5, such as IC Markets or Pepperstone. Minimum deposit: $1000 for optimal performance.
+  </Card>
+  <Card title="MetaTrader Installed" icon="download" href="#">
+    Download and install MetaTrader 4 or 5 from your broker's website.
+  </Card>
+  <Card title="FXZIG License" icon="key" href="/docs/licensing">
+    Purchase your FXZIG license key from the dashboard.
+  </Card>
+  <Card title="VPS Recommended" icon="cloud" href="/docs/vps-setup">
+    Rent a VPS for 24/7 trading to avoid interruptions.
+  </Card>
+</Columns>
+
+## Step-by-Step Setup
+
+Follow these numbered steps to get your portfolio running.
+
+<Steps>
+  <Step title="Download FXZIG Software" icon="download">
+    Log in to your FXZIG dashboard at `https://app.fxzig.com`. Select a ready-to-run portfolio like "High Expectancy Scalper" and download the ZIP file containing the EA files (`.ex4` or `.ex5`).
+  </Step>
+
+  <Step title="Install on MetaTrader" icon="settings">
+    Extract the ZIP and copy the EA files to your MetaTrader `Experts` folder.
+
+    <Tabs>
+      <Tab title="MetaTrader 4" icon="terminal">
+        ```bash
+        # Typical path on Windows
+        C:\Users\YourName\AppData\Roaming\MetaQuotes\Terminal\XXXX\MQL4\Experts\
+        ```
+        Restart MT4, then drag the EA onto a chart (EURUSD M15 recommended).
+      </Tab>
+      <Tab title="MetaTrader 5" icon="code">
+        ```bash
+        # Typical path on Windows
+        C:\Users\YourName\AppData\Roaming\MetaQuotes\Terminal\YYYY\MQL5\Experts\
+        ```
+        Restart MT5, compile the EA in MetaEditor, then attach to a chart.
+      </Tab>
+    </Tabs>
+
+    Enable automated trading in MT4/MT5 (Tools > Options > Expert Advisors > Allow automated trading).
+  </Step>
+
+  <Step title="Activate Portfolio" icon="play">
+    In the EA settings dialog, enter your FXZIG license key (e.g., `FXZ-LICENSE-ABC123-DEF456`).
+
+    <CodeGroup tabs="MT4 Config,MT5 Config">
+      ```ini
+      // MT4 EA Inputs
+      LicenseKey=YOUR_FXZIG_LICENSE
+      RiskPercent=2.0
+      MaxTrades=5
+      MagicNumber=12345
+      ```
+      ```ini
+      // MT5 EA Inputs
+      LicenseKey=YOUR_FXZIG_LICENSE
+      RiskPercent=2.0
+      MaxSpread=3.0
+      MagicNumber=12345
+      TradeStartHour=8
+      TradeEndHour=18
+      ```
+    </CodeGroup>
+  </Step>
+
+  <Step title="Fund Account and Launch" icon="rocket">
+    Deposit at least $1000 to your broker account. Verify the EA shows a smiling face icon on the chart. Monitor the first trades in the Experts tab.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<Columns cols={3}>
+  <Card title="Monitor Performance" icon="bar-chart" href="/docs/monitoring">
+    Track expectancy and drawdown using built-in reports.
+  </Card>
+  <Card title="Scale Portfolio" icon="trending-up" href="/docs/scaling">
+    Add more EAs once initial results confirm profitability.
+  </Card>
+  <Card title="Troubleshooting" icon="help-circle" href="/docs/troubleshooting">
+    Common issues and solutions.
+  </Card>
+</Columns>
+
+## Frequently Asked Questions
+
+<ExpandableGroup>
+  <Expandable title="What brokers work best with FXZIG?" default-open="false">
+    ECN brokers with low spreads like IC Markets, Pepperstone, or FP Markets. Avoid market maker brokers for best results.
+  </Expandable>
+  <Expandable title="How much should I fund initially?">
+    Start with $1000-$5000 depending on risk settings. The portfolio targets 2-5% risk per trade.
+  </Expandable>
+  <Expandable title="Does it work on demo accounts?">
+    Yes, but live accounts provide real slippage and execution data for accurate backtesting.
+  </Expandable>
+</ExpandableGroup>
+
+<Callout kind="success">
+  Congratulations! Your FXZIG portfolio is now live. Expect initial trades within the next market session.
+</Callout>

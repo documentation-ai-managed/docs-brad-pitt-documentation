@@ -1,0 +1,139 @@
+---
+title: Changelog
+description: Track updates and improvements to FXZIG Forex trading solutions over time.
+---
+
+## Overview
+
+Stay informed about the latest releases for FXZIG Forex trading solutions. You receive profitable expert advisors (EAs) that run on live accounts with high expectancy models targeting up to `20` points per trade. Review changes below to understand enhancements in portfolio performance, stability, and new automation features.
+
+<Callout kind="info">
+  Bookmark this page for updates. Enable auto-updates in your MT5 terminal to apply patches seamlessly.
+</Callout>
+
+<Update label="2024-10-15" description="v1.2.0" tags={["feature", "improvement"]}>
+
+## New Features
+
+- Added dynamic expectancy adjustment based on market volatility. Your EAs now target `15-25` points dynamically.
+- Integrated portfolio dashboard for real-time profit tracking across multiple pairs.
+
+## Improvements
+
+- Enhanced risk management with trailing stops optimized for EUR/USD and GBP/JPY.
+- Reduced drawdown by `12%` through refined entry signals.
+
+## Bug Fixes
+
+- Fixed occasional slippage on high-volatility news events.
+- Resolved MT5 compatibility issue with custom indicators.
+
+</Update>
+
+<Update label="2024-09-20" description="v1.1.0" tags={["bugfix", "improvement"]}>
+
+## Improvements
+
+- Upgraded expectancy model to handle ranging markets better, maintaining `18+` points average.
+- Optimized CPU usage for multi-EA portfolios, reducing load by `30%`.
+
+## Bug Fixes
+
+- Corrected position sizing error on Gold (XAU/USD) trades.
+- Patched reconnection logic after broker disconnects.
+
+</Update>
+
+<Update label="2024-08-10" description="v1.0.0" tags={["feature", "breaking"]}>
+
+## New Features
+
+- Initial release of ready-to-run Forex portfolios with 5 profitable EAs.
+- Core expectancy engine delivering up to `20` points per trade on live accounts.
+
+## Breaking Changes
+
+- Updated config format requires new `ExpectancyTarget` parameter.
+
+## Initial Setup
+
+- Deploy EAs on MT4/MT5 with one-click installer.
+
+</Update>
+
+## Upcoming Features
+
+Preview what's next for your automated trading strategies.
+
+<Columns cols={3}>
+  <Card title="AI Signals" icon="zap" href="/docs/ai-signals">
+    Machine learning predictions for entry/exit points.
+  </Card>
+  <Card title="Multi-Broker Sync" icon="link" href="/docs/multi-broker">
+    Seamless portfolio sync across brokers.
+  </Card>
+  <Card title="Mobile Alerts" icon="smartphone" href="/docs/mobile">
+    Push notifications for trade expectancy updates.
+  </Card>
+</Columns>
+
+## How to Update Your Portfolios
+
+Follow these steps to apply the latest versions.
+
+<Steps>
+  <Step title="Backup Current EAs" icon="database">
+    Export your MT5 presets to avoid data loss.
+  </Step>
+  <Step title="Download Update" icon="download">
+    Get the latest from your FXZIG dashboard.
+  </Step>
+  <Step title="Install and Restart" icon="refresh-cw">
+    Replace `.ex5` files and restart the terminal.
+
+    <CodeGroup tabs="MT5,MQL5 Config">
+      ```mql5
+      // ex5/ExpectancyEA.mq5
+      input double ExpectancyTarget = 20.0;
+      input int RiskPercent = 2;
+      ```
+      ```ini
+      ; config.ini
+      [Expectancy]
+      TargetPoints=20
+      MaxDrawdown=5%
+      Pairs=EURUSD,GBPUSD
+      ```
+    </CodeGroup>
+  </Step>
+  <Step title="Verify Performance" icon="bar-chart-3">
+    Monitor first `24` hours for expectancy alignment.
+  </Step>
+</Steps>
+
+<Tabs>
+  <Tab title="MT4 Users" icon="terminal">
+    Use the legacy installer for MT4 compatibility.
+
+    <Callout kind="tip">
+      MT4 support ends in v2.0. Migrate to MT5 soon.
+    </Callout>
+  </Tab>
+  <Tab title="MT5 Users" icon="package">
+    Full support with native `.ex5` binaries.
+  </Tab>
+</Tabs>
+
+<Expandable title="Detailed Migration Guide" default-open="false">
+
+For advanced users, update the expectancy model manually:
+
+````mql5
+// Update this in your EA source
+double CalculateExpectancy() {
+    double volatility = iATR(Symbol(), PERIOD_H1, 14);
+    return baseExpectancy * (1 + volatility / 1000.0);
+}
+````
+
+</Expandable>

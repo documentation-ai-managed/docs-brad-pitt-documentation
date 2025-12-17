@@ -1,0 +1,122 @@
+---
+title: Troubleshooting Common Issues
+description: Resolve frequent problems encountered with FXZIG expert advisors and portfolios.
+---
+
+## Connection Issues with Trading Platforms
+
+FXZIG expert advisors require stable connections to MetaTrader 4 (MT4) or MetaTrader 5 (MT5) platforms. Common causes include firewall blocks, incorrect server settings, or network instability. Follow these steps to diagnose and fix issues.
+
+<Callout kind="alert">
+  Always back up your EA settings before making changes to avoid data loss.
+</Callout>
+
+<Steps>
+  <Step title="Verify Platform Login" icon="check-circle">
+    Open MT4/MT5 and confirm your account login succeeds. Check the Journal tab for errors like "Invalid account".
+  </Step>
+  <Step title="Check EA Attachment" icon="settings">
+    Drag the FXZIG EA onto a chart. Ensure "Allow live trading" is enabled in Tools > Options > Expert Advisors.
+  </Step>
+  <Step title="Review Logs" icon="file-text">
+    Examine the Experts tab for connection failures. Look for messages like "No connection to trade server".
+  </Step>
+  <Step title="Restart and Test" icon="refresh-cw">
+    Restart the platform and run a demo trade to verify connectivity.
+  </Step>
+</Steps>
+
+## Platform-Specific Fixes
+
+Use the tabs below for tailored solutions based on your platform.
+
+<Tabs>
+  <Tab title="MT4" icon="terminal">
+    ```mql4
+    // Check broker server in EA config
+    input string BrokerServer = "YourBroker-Live1";
+    if (TerminalInfoInteger(TERMINAL_CONNECTED) == false) {
+        Print("No connection - check server: ", BrokerServer);
+    }
+    ```
+    
+    Ensure your broker's DLL is enabled. Go to Tools > Options > Expert Advisors and check "Allow DLL imports".
+  </Tab>
+  <Tab title="MT5" icon="code">
+    ```mql5
+    // MT5 connection check
+    if (!TerminalInfoInteger(TERMINAL_CONNECTED)) {
+        Print("Connection lost. Reconnect to: ", AccountInfoString(ACCOUNT_SERVER));
+        ExpertRemove();
+    }
+    ```
+    
+    Update MT5 to the latest build. Run `Market Watch > Right-click > Show All` to refresh symbols.
+  </Tab>
+</Tabs>
+
+## Error Handling for Failed Trades
+
+Failed trades often stem from slippage, insufficient margin, or invalid parameters. Analyze logs to identify patterns.
+
+<CodeGroup tabs="Error Log,Fix Script">
+  ```log
+  2024-10-15 14:30:12.345 FXZIG_EA_Pro: OrderSend failed with error 130 (Invalid stops)
+  2024-10-15 14:31:05.678 FXZIG_EA_Pro: Not enough money (error 134)
+  ```
+  ```mql4
+  // Handle common errors in FXZIG EA
+  int ticket = OrderSend(Symbol(), OP_BUY, 0.1, Ask, 3, Ask-50*Point, Ask+100*Point);
+  if (ticket < 0) {
+      int error = GetLastError();
+      if (error == 130) Print("Adjust stop loss >10 pips");
+      if (error == 134) Print("Increase margin");
+  }
+  ```
+</CodeGroup>
+
+| Error Code | Description | Quick Fix |
+|------------|-------------|-----------|
+| 130 | Invalid stops | Set SL/TP > `{10}` pips |
+| 134 | Insufficient funds | Reduce lot size to `0.01` |
+| 136 | Off quotes | Use slippage `3-5` points |
+
+## Performance Optimization Tips
+
+Optimize your FXZIG portfolio for better expectancy.
+
+<Expandable title="Advanced Optimization" default-open="false">
+
+Tune parameters like magic number and max spread.
+
+```mql4
+// Optimal settings for high expectancy
+input int MagicNumber = 123456;
+input double MaxSpread = 2.0;  // Pips
+input double LotSize = 0.01;
+```
+
+- Run backtests on M1 timeframe for 1+ year.
+- Avoid news events (use `TimeCurrent()` filters).
+- Monitor drawdown < `{20}%`.
+
+</Expandable>
+
+<Columns cols={2}>
+  <Card title="Monitor Drawdown" icon="trending-down" href="#">
+    Keep portfolio risk below `{5}%` per trade.
+  </Card>
+  <Card title="Update EAs" icon="download" href="#">
+    Download latest FXZIG robots from dashboard.
+  </Card>
+</Columns>
+
+## Contacting Support
+
+For unresolved issues, reach out to FXZIG support.
+
+<Callout kind="info">
+  Provide your account ID, EA logs, and screenshot of the Experts tab when contacting support@fxzig.com.
+</Callout>
+
+Submit a ticket via the client portal with details like broker name and trade history. Response time is typically < `{24}` hours.

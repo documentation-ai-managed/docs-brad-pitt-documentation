@@ -1,0 +1,146 @@
+---
+title: Configuration Options
+description: Learn how to customize and configure FXZIG expert advisors and portfolios to match your trading preferences.
+---
+
+## Overview
+
+Customize FXZIG expert advisors (EAs) and portfolios to align with your risk tolerance and trading strategy. Adjust parameters like lot sizes, risk levels, trade filters, and timeframes directly in MetaTrader. Integrate with your broker account seamlessly and set up backups for reliable operation.
+
+<Columns cols={3}>
+  <Card title="Risk Management" icon="shield" href="#risk-management">
+    Set lot sizes and risk parameters to protect your capital.
+  </Card>
+  <Card title="Trade Filters" icon="filter" href="#trade-filters">
+    Fine-tune entry conditions and timeframes.
+  </Card>
+  <Card title="Broker Setup" icon="link" href="#broker-setup">
+    Connect to your Forex broker account.
+  </Card>
+</Columns>
+
+## Risk Management
+
+Control your exposure by configuring lot sizes and risk percentages. Start with conservative settings, such as 2% risk per trade, and scale based on account size.
+
+<Steps>
+  <Step title="Open EA Settings" icon="settings">
+    Right-click the EA in MetaTrader Navigator, select Properties.
+  </Step>
+  <Step title="Set Lot Size" icon="package">
+    Enter fixed lot size (e.g., `0.01`) or use auto-calculation based on risk.
+  </Step>
+  <Step title="Adjust Risk %" icon="trending-down">
+    Set maximum risk per trade to `2.0` for balanced growth.
+  </Step>
+</Steps>
+
+<Callout kind="warning">
+  Never exceed 5% risk per trade to avoid margin calls during volatile markets.
+</Callout>
+
+Example configuration in a `.set` file:
+
+<CodeGroup tabs="Fixed Lot,Dynamic Risk">
+```ini
+// Fixed Lot Size
+LotSize=0.01
+MaxTrades=3
+MagicNumber=12345
+```
+
+```ini
+// Dynamic Risk (2% per trade)
+RiskPercent=2.0
+AccountBalance=10000
+MaxTrades=3
+MagicNumber=12345
+```
+</CodeGroup>
+
+## Trade Filters and Timeframes
+
+Apply filters to avoid low-probability trades. Restrict trading to high-liquidity sessions like London-New York overlap.
+
+<Tabs>
+  <Tab title="MT4 Configuration" icon="terminal">
+    Edit inputs in EA properties:
+
+    ```mql4
+    extern bool UseTimeFilter = true;
+    extern int StartHour = 8;   // GMT
+    extern int EndHour = 17;
+    extern ENUM_TIMEFRAMES Timeframe = PERIOD_H1;
+    ```
+
+    Enable news filter to pause during high-impact events.
+  </Tab>
+  <Tab title="MT5 Configuration" icon="code">
+    Use similar inputs with MT5 syntax:
+
+    ```mql5
+    input bool UseTimeFilter = true;
+    input int StartHour = 8;
+    input int EndHour = 17;
+    input ENUM_TIMEFRAMES Timeframe = PERIOD_H1;
+    ```
+
+    Add spread filter: `MaxSpread=3.0` pips.
+  </Tab>
+</Tabs>
+
+## Broker Account Integration
+
+Link your FXZIG portfolio to supported brokers like IC Markets or Pepperstone.
+
+<Steps>
+  <Step title="Login to MetaTrader" icon="log-in">
+    Open MT4/MT5 and log in with broker credentials.
+  </Step>
+  <Step title="Attach EA" icon="download">
+    Drag EA from Navigator to chart. Select `.set` file with your config.
+  </Step>
+  <Step title="Enable Auto-Trading" icon="play">
+    Click the AutoTrading button (green play icon) in toolbar.
+  </Step>
+</Steps>
+
+<ParamField path="MagicNumber" param-type="int" required="true">
+  Unique ID per EA (e.g., `12345`) to avoid trade conflicts.
+</ParamField>
+
+<ParamField query="MaxSpread" param-type="double">
+  Maximum allowed spread in pips (e.g., `3.0`).
+</ParamField>
+
+## Backup and Recovery
+
+Safeguard your settings against platform crashes.
+
+<Expandable title="Backup Procedure" default-open="false">
+
+1. Export `.set` files from `MQL4/Experts/Files`.
+2. Store in cloud storage like Google Drive.
+3. Test recovery by importing to a demo account.
+
+Recovery example:
+
+```bash
+# Copy backup to MetaTrader Files folder
+cp ~/backups/fxz-portfolio.set /path/to/MT4/MQL4/Files/
+```
+
+</Expandable>
+
+<Expandable title="Advanced Recovery" default-open="false">
+
+If trades desync, reset MagicNumber and restart EA. Monitor equity drawdown `<20%`.
+
+```mql4
+// Recovery input
+input bool EnableRecoveryMode = false;
+```
+
+</Expandable>
+
+These configurations ensure your FXZIG EAs deliver up to 20 points expectancy per trade while minimizing risks. Test all changes on a demo account first.
